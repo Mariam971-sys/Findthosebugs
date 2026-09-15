@@ -12,24 +12,31 @@ export default function TodoApp() {
   const [filter, setFilter] = useState<Filter>("all");
 
   function addTodo(text: string) {
-    setTodos((prev) => [...prev, { id: nextId++, text, completed: false }]);
+    setTodos((prev) => [
+      ...prev,
+      { id: nextId++, text, completed: false },
+    ]);
   }
 
   function toggleTodo(id: number) {
     setTodos((prev) =>
       prev.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo,
+        todo.id === id
+          ? { ...todo, completed: !todo.completed }
+          : todo,
       ),
     );
   }
 
   function deleteTodo(id: number) {
-    setTodos((prev) => prev.filter((todo) => todo.id !== id));
+    setTodos((prev) =>
+      prev.filter((todo) => todo.id !== id),
+    );
   }
 
   const filteredTodos = todos.filter((todo) => {
     if (filter === "active") return !todo.completed;
-    if (filter === "completed") return !todo.completed;
+    if (filter === "completed") return todo.completed;
     return true;
   });
 
